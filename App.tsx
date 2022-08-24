@@ -8,8 +8,9 @@
  * @format
  */
 
-import React, {type PropsWithChildren} from 'react';
+import React, {type PropsWithChildren, useEffect, useState} from 'react';
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -26,6 +27,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import Crashes from "appcenter-crashes";
+import Analytics from "appcenter-analytics";
 
 const Section: React.FC<
   PropsWithChildren<{
@@ -60,9 +63,22 @@ const Section: React.FC<
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
+  const [didCrash, setDidCrash] = useState(false);
+
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  useEffect(()=>{
+    checkPreviousSession();
+  },[]);
+
+  const checkPreviousSession  = async () => {
+      const didCrash = await Crashes.hasCrashedInLastSession();
+      // await Crashes.lastSessionCrashReport();
+      setDidCrash(didCrash);
+
+  }
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -79,17 +95,28 @@ const App = () => {
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
           </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          <Button title='Calculate Inflation' onPress={async ()=>{ 
+            
+            try {
+              Analytics.trackEvent("calculate_inflation",{Internet: "Wifi"});
+              console.log("event sent");
+            } catch (error) {
+              
+              console.log("Error while sending event");
+              
+            }
+            
+          
+          }}/>
+          <Button title='Crash' onPress={()=>{ Crashes.generateTestCrash()}}/>
+          {
+          didCrash &&
+          <Section title="Sorry !">
+          We are looking for a fix to solve that crash.
+        </Section>
+        }
         </View>
+       
       </ScrollView>
     </SafeAreaView>
   );
@@ -115,3 +142,4 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
