@@ -17,6 +17,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -111,6 +112,37 @@ const App = () => {
 
   return (
     <SafeAreaView style={backgroundStyle}>
+
+          <View style={styles.container}>
+          
+          <TextInput placeholder="Current inflation rate"
+          style={styles.textBox} keyboardType='decimal-pad'
+          onChangeText={(value) => setInflationData({...inflationData, inflationRate: Number(value) })}/>
+          <TextInput placeholder="Current risk free rate"
+          style={styles.textBox} keyboardType='decimal-pad'
+          onChangeText={(value) => setInflationData({...inflationData,riskFreeRate: Number(value)})}/>
+          <TextInput placeholder="Amount you want to save"
+          style={styles.textBox} keyboardType='decimal-pad'
+          onChangeText={(value) => setInflationData({...inflationData,amount: Number(value)})}/>
+          <TextInput placeholder="For how long (in years) will you save?"
+          style={styles.textBox} keyboardType='decimal-pad'
+          onChangeText={(value) => setInflationData({...inflationData,timeInYears: Number(value)})}/>
+
+          <TouchableOpacity 
+          style={{backgroundColor:"black", marginVertical:10,  height:40, borderRadius:10, justifyContent:'center' , alignItems:"center"}}
+          onPress={() => {
+          calculate();
+
+          }} >
+            <Text style={{color:"white"}}>Calculate Inflation</Text>
+          </TouchableOpacity>
+          
+          <Text style={styles.label}>{inflationData.timeInYears} years from now you will still have ${inflationData.amount} but it will only be worth ${inflationData.afterInflation}.</Text>
+          <Text style={styles.label}>But if you invest it at a risk free rate you will have ${inflationData.atRiskFree}.</Text>
+          <Text style={styles.label}>Which will be worth ${inflationData.atRiskFreeAfterInflation} after inflation.</Text>
+          <Text style={styles.label}>A difference of: ${inflationData.difference}.</Text>
+          </View>
+      
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
@@ -128,30 +160,7 @@ const App = () => {
           <Section title="Inflation Calculator">
          </Section>
        
-          <View style={styles.container}>
           
-          <TextInput placeholder="Current inflation rate"
-          style={styles.textBox} keyboardType='decimal-pad'
-          onChangeText={(value) => setInflationData({...inflationData, inflationRate: Number(value) })}/>
-          <TextInput placeholder="Current risk free rate"
-          style={styles.textBox} keyboardType='decimal-pad'
-          onChangeText={(value) => setInflationData({...inflationData,riskFreeRate: Number(value)})}/>
-          <TextInput placeholder="Amount you want to save"
-          style={styles.textBox} keyboardType='decimal-pad'
-          onChangeText={(value) => setInflationData({...inflationData,amount: Number(value)})}/>
-          <TextInput placeholder="For how long (in years) will you save?"
-          style={styles.textBox} keyboardType='decimal-pad'
-          onChangeText={(value) => setInflationData({...inflationData,timeInYears: Number(value)})}/>
-          <Button title="Calculate inflation"
-          onPress={() => {
-          calculate();
-          Analytics.trackEvent('calculate_inflation', { Internet: 'WiFi', GPS: 'Off' });
-          }} />
-          <Text style={styles.label}>{inflationData.timeInYears} years from now you will still have ${inflationData.amount} but it will only be worth ${inflationData.afterInflation}.</Text>
-          <Text style={styles.label}>But if you invest it at a risk free rate you will have ${inflationData.atRiskFree}.</Text>
-          <Text style={styles.label}>Which will be worth ${inflationData.atRiskFreeAfterInflation} after inflation.</Text>
-          <Text style={styles.label}>A difference of: ${inflationData.difference}.</Text>
-          </View>
 
           <Button title='Send Event' onPress={async ()=>{      
             try {
@@ -200,7 +209,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   textBox: {
-    height: 30,
+    height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 10

@@ -38,6 +38,16 @@
                ReferencedContainer = "container:ReactNativeCICD.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F97C927228BA914D00895291"
+               BuildableName = "ReactNativeCICDUITests.xctest"
+               BlueprintName = "ReactNativeCICDUITests"
+               ReferencedContainer = "container:ReactNativeCICD.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
