@@ -21,7 +21,7 @@ Record and create the tests using Android Studio.
 
 Go to example :
 
->  android/app/src/androidTest/java/com/reactnativecicd/MainActivityTest.java
+> android/app/src/androidTest/java/com/reactnativecicd/MainActivityTest.java
 
 Then execute the following commands:
 
@@ -41,7 +41,7 @@ Record and create the tests usign XCode
 
 Go to example :
 
->  ios/ReactNativeCICDUITests/ReactNativeCICDUITests.m
+> ios/ReactNativeCICDUITests/ReactNativeCICDUITests.m
 
 ```
 cd ios
@@ -57,7 +57,6 @@ Go to XCode and configure:
 
 ![](/images/ios/iosTest4.png)
 
-
 Then run :
 
 ```
@@ -72,3 +71,15 @@ xcrun xcodebuild clean build-for-testing -configuration Release -workspace  Reac
 
 appcenter test run xcuitest --app "Franklin-Organization/ReactNativeCICD_AppCenter-1" --devices "Franklin-Organization/iosdeviceset1" --test-series "iostestseries1" --locale "en_US" --build-dir DerivedData/Build/Products/Release-iphoneos
 ```
+
+# App Center Screenshots
+
+![](./images/appCenter/appCenter1.png)
+
+![](./images/appCenter/appCenter2.png)
+
+![](./images/appCenter/appCenter3.png)
+
+![](./images/appCenter/appCenter4.png)
+
+![](./images/appCenter/appCenter5.png)
